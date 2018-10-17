@@ -9,12 +9,12 @@ def main(argv):
 	try:
 		opts, args = getopt.getopt(argv,"hp:c:n:s:e:",["period=","currency=","points="])
 	except getopt.GetoptError:
-		print 'trading-bot.py -p <period length> -c <currency pair> -n <period of moving average>'
+		print ("trading-bot.py -p <period length> -c <currency pair> -n <period of moving average>")
 		sys.exit(2)
     #arguments
 	for opt, arg in opts:
 		if opt == '-h':
-			print 'trading-bot.py -p <period length> -c <currency pair> -n <period of moving average>'
+			print ('trading-bot.py -p <period length> -c <currency pair> -n <period of moving average>')
 			sys.exit()
 		elif opt in ("-p", "--period"):
 			if (int(arg) in [300,900,1800,7200,14400,86400]):
