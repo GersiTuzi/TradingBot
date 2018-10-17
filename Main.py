@@ -1,6 +1,6 @@
 
 import sys, getopt
-
+#bonjour
 
 def main(argv):
 	period = 10
