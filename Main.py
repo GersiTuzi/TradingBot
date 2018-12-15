@@ -25,7 +25,7 @@ def api(symbol):
         MagasinDesPrix.append(a[key]['2. high'])
         temp2 += 1
 
-    data = { "function": "RSI",
+    data = {"function": "RSI",
              "symbol": symbol,
              "interval": "30min",
              "time_period": "30",
@@ -45,8 +45,22 @@ def api(symbol):
     return MagasindeKeys, MagasinDesPrix
 
 
-tableau = api('USDJPY')
-print(tableau)
+def tradingstrat():
+    rsi, prix = api(symbols)
+    for key in rsi:
+        if float(key) > 70:
+            print("SELL ", prix[rsi.index(key)])
+        if float(key) < 40:
+            print("BUY ", prix[rsi.index(key)])
+
+tradingstrat()
+#tableau = api('USDJPY')
+#print(tableau)
+
+
+
+
+
 
 
 
