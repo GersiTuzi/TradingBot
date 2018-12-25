@@ -5,7 +5,7 @@ API_URL = "https://www.alphavantage.co/query"
 symbols = ['USDCAD']
 MagasinValeurRSI = []
 MagasinDesPrix = []
-tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2"]
+tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2", "OGPYF95QNH7KBH3B"]
 
 
 def api(symbol):
@@ -16,7 +16,7 @@ def api(symbol):
             "symbol": symbol,
             "interval": "30min",
             "datatype": "json",
-            "apikey": "YGY55JABOFDU3X8Y"}
+            "apikey": "OGPYF95QNH7KBH3B"}
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Time Series (30min)'])
@@ -48,11 +48,28 @@ def api(symbol):
 
 def tradingstrat():
     rsi, prix = api(symbols)
+    pipValue= 0
+    operation = 0
+    initialPrice = 0
+    finalPrice = 0
+    #if rsi over 70 we sell and buy back when it reaches min value
     for key in rsi:
-        if float(key) > 70:
-            print("SELL ", prix[rsi.index(key)])
-        if float(key) < 40:
-            print("BUY ", prix[rsi.index(key)])
+        if float(key) > 65:
+            currentPrice = prix[rsi.index(key)]
+            print("SELL ", currentPrice)
+            if operation%2 == 0 :
+                initialPrice = currentPrice
+                print("initialPrice: ", initialPrice)
+                operation += 1
+        if float(key) < 52:
+            currentPrice = prix[rsi.index(key)]
+            print("BUY ", currentPrice)
+            if operation%2 == 1:
+                finalPrice = currentPrice
+                operation+=1
+                pipValue = float(initialPrice) - float(finalPrice)
+                print("finalPrice: ", initialPrice)
+                print("PIPVALUE = ", pipValue)
 
 tradingstrat()
 tableauRSI, prix = api('USDJPY')
