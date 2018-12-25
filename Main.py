@@ -6,7 +6,7 @@ API_URL = "https://www.alphavantage.co/query"
 symbols = ['USDCAD']
 MagasinValeurRSI = []
 MagasinDesPrix = []
-tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2", "OGPYF95QNH7KBH3B","29UFVVR0Q0SJUGRC"]
+tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2", "OGPYF95QNH7KBH3B","29UFVVR0Q0SJUGRC","WCZ8WZ9NL8YX12X1"]
 
 
 def api(symbol):
@@ -17,7 +17,7 @@ def api(symbol):
             "symbol": symbol,
             "interval": "30min",
             "datatype": "json",
-            "apikey": "29UFVVR0Q0SJUGRC"}
+            "apikey": "WCZ8WZ9NL8YX12X1"}
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Time Series (30min)'])
@@ -33,7 +33,7 @@ def api(symbol):
              "time_period": "30",
              "series_type": "close",
              "datatype": "json",
-             "apikey": "29UFVVR0Q0SJUGRC"}
+             "apikey": "WCZ8WZ9NL8YX12X1"}
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Technical Analysis: RSI'])
@@ -54,6 +54,8 @@ def tradingstrat():
     initialPrice = 0
     finalPrice = 0
     #if rsi over 70 we sell and buy back when it reaches min value
+    file = open("RSI2.txt", 'a', encoding="utf8")
+
     for key in rsi:
         if float(key) > 65:
             currentPrice = prix[rsi.index(key)]
@@ -61,7 +63,7 @@ def tradingstrat():
             if operation%2 == 0 :
                 initialPrice = currentPrice
                 string = "SELLING AT "+ currentPrice+ "\n"
-                writeInFile("rsiTest.txt",string)
+                file.write(string)
                 print("initialPrice: ", initialPrice)
                 operation += 1
         if float(key) < 52:
@@ -72,23 +74,19 @@ def tradingstrat():
                 operation+=1
                 pipValue = float(initialPrice) - float(finalPrice)
                 string = "BUYING AT "+ currentPrice+ "\n"
-                writeInFile("rsiTest.txt", string)
+                file.write(string)
                 print("finalPrice: ", initialPrice)
 
                 string= "Profit: "+ str(pipValue) + "\n"
-                writeInFile("rsiTest.txt",string)
+                file.write(string)
                 print("PIPVALUE = ", pipValue)
+    file.close()
 
 if __name__ == "  main  ":
     parser = argparse.ArgumentParser(prog="main.py")
     parser.add_argument('-a', required=False, help='argument qu on peut ajouter')
     args=parser.parse_args()
 
-def writeInFile(file,string):
-    print("writing")
-    file = open(file,'w',encoding="utf8")
-    file.write(string)
-    file.close()
 
 
 
