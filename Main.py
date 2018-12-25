@@ -6,7 +6,7 @@ API_URL = "https://www.alphavantage.co/query"
 symbols = ['USDCAD']
 MagasinValeurRSI = []
 MagasinDesPrix = []
-tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2", "OGPYF95QNH7KBH3B","29UFVVR0Q0SJUGRC","WCZ8WZ9NL8YX12X1"]
+tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2", "OGPYF95QNH7KBH3B","29UFVVR0Q0SJUGRC","WCZ8WZ9NL8YX12X1","JQUOZ93SABS6OVJP"]
 
 
 def api(symbol):
@@ -17,7 +17,7 @@ def api(symbol):
             "symbol": symbol,
             "interval": "30min",
             "datatype": "json",
-            "apikey": "WCZ8WZ9NL8YX12X1"}
+            "apikey": "YGY55JABOFDU3X8Y"}
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Time Series (30min)'])
@@ -33,7 +33,7 @@ def api(symbol):
              "time_period": "30",
              "series_type": "close",
              "datatype": "json",
-             "apikey": "WCZ8WZ9NL8YX12X1"}
+             "apikey": "BXE971HIQ45YMM8Z"}
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Technical Analysis: RSI'])
@@ -54,8 +54,9 @@ def tradingstrat():
     initialPrice = 0
     finalPrice = 0
     #if rsi over 70 we sell and buy back when it reaches min value
+    file = open("RSI2.txt", 'w', encoding="utf8")
+    file.close()
     file = open("RSI2.txt", 'a', encoding="utf8")
-
     for key in rsi:
         if float(key) > 65:
             currentPrice = prix[rsi.index(key)]
