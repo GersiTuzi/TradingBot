@@ -1,11 +1,12 @@
 import requests
+import argparse
 
 API_URL = "https://www.alphavantage.co/query"
 
 symbols = ['USDCAD']
 MagasinValeurRSI = []
 MagasinDesPrix = []
-tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2", "OGPYF95QNH7KBH3B"]
+tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2", "OGPYF95QNH7KBH3B","29UFVVR0Q0SJUGRC"]
 
 
 def api(symbol):
@@ -32,7 +33,7 @@ def api(symbol):
              "time_period": "30",
              "series_type": "close",
              "datatype": "json",
-             "apikey": "YGY55JABOFDU3X8Y" }
+             "apikey": "29UFVVR0Q0SJUGRC"}
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Technical Analysis: RSI'])
@@ -70,6 +71,18 @@ def tradingstrat():
                 pipValue = float(initialPrice) - float(finalPrice)
                 print("finalPrice: ", initialPrice)
                 print("PIPVALUE = ", pipValue)
+
+if __name__ == "  main  ":
+    parser = argparse.ArgumentParser(prog="main.py")
+    parser.add_argument('-a', required=False, help='argument qu on peut ajouter')
+    args=parser.parse_args()
+
+def writeInFile(file,string):
+    file = open(file,'w',encoding="utf8")
+    file.write(string)
+    file.close()
+
+
 
 tradingstrat()
 tableauRSI, prix = api('USDJPY')
