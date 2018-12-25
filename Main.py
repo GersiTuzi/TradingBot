@@ -60,6 +60,8 @@ def tradingstrat():
             print("SELL ", currentPrice)
             if operation%2 == 0 :
                 initialPrice = currentPrice
+                string = "SELLING AT "+ currentPrice+ "\n"
+                writeInFile("rsiTest.txt",string)
                 print("initialPrice: ", initialPrice)
                 operation += 1
         if float(key) < 52:
@@ -69,7 +71,12 @@ def tradingstrat():
                 finalPrice = currentPrice
                 operation+=1
                 pipValue = float(initialPrice) - float(finalPrice)
+                string = "BUYING AT "+ currentPrice+ "\n"
+                writeInFile("rsiTest.txt", string)
                 print("finalPrice: ", initialPrice)
+
+                string= "Profit: "+ str(pipValue) + "\n"
+                writeInFile("rsiTest.txt",string)
                 print("PIPVALUE = ", pipValue)
 
 if __name__ == "  main  ":
