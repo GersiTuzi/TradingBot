@@ -17,7 +17,7 @@ def api(symbol):
             "symbol": symbol,
             "interval": "30min",
             "datatype": "json",
-            "apikey": "OGPYF95QNH7KBH3B"}
+            "apikey": "29UFVVR0Q0SJUGRC"}
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Time Series (30min)'])
@@ -85,6 +85,7 @@ if __name__ == "  main  ":
     args=parser.parse_args()
 
 def writeInFile(file,string):
+    print("writing")
     file = open(file,'w',encoding="utf8")
     file.write(string)
     file.close()
