@@ -3,7 +3,7 @@ import requests
 API_URL = "https://www.alphavantage.co/query"
 
 symbols = ['USDCAD']
-MagasindeKeys = []
+MagasinValeurRSI = []
 MagasinDesPrix = []
 tableauDeKeys = ["YGY55JABOFDU3X8Y","BXE971HIQ45YMM8Z","LU8TM1QS01RIUOL2"]
 
@@ -20,6 +20,7 @@ def api(symbol):
     response = requests.get(API_URL, data)
     data = response.json()
     a = (data['Time Series (30min)'])
+
     keys = (a.keys())
     for key in keys:
         MagasinDesPrix.append(a[key]['2. high'])
@@ -39,10 +40,10 @@ def api(symbol):
 
     for key in keys:
         if temp1 < temp2:
-            MagasindeKeys.append(a[key]['RSI'])
+            MagasinValeurRSI.append(a[key]['RSI'])
             temp1 += 1
 
-    return MagasindeKeys, MagasinDesPrix
+    return MagasinValeurRSI, MagasinDesPrix
 
 
 def tradingstrat():
@@ -54,8 +55,9 @@ def tradingstrat():
             print("BUY ", prix[rsi.index(key)])
 
 tradingstrat()
-#tableau = api('USDJPY')
-#print(tableau)
+tableauRSI, prix = api('USDJPY')
+print(tableauRSI)
+print(prix)
 
 
 
